@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>dev.dtk</groupId>
 	<artifactId>task-manager</artifactId>
-	<version>1.0.1</version>
+	<version>1.0.0</version>
 	<name>task-manager</name>
 	<description>Task Manager app build with Spring Boot + JTE + HTMX</description>
 	<url/>

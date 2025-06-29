@@ -21,7 +21,10 @@
                         status.</p>
                 </div>
                 <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
-                    <form >
+                    <form hx-post="/add-task"
+                          hx-target="#taskTableBody"
+                          hx-swap="beforeend"
+                          hx-on::after-request="this.reset()">
                         <input id="newTaskInput"
                                type="text"
                                name="description"

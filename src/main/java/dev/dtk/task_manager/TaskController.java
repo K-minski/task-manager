@@ -29,4 +29,11 @@ public class TaskController {
         model.addAttribute("task", newTask);
         return "task-row";
     }
+    @DeleteMapping("/delete-task/{id}")
+    @ResponseBody
+    public void deleteTask(@PathVariable String id) {
+        boolean removed = repository.remove(id);
+        log.info("Task with id: {} was deleted.", id);
+    }
+
 }

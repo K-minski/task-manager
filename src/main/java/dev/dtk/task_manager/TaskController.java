@@ -22,4 +22,11 @@ public class TaskController {
         return "index";
     }
 
+    @DeleteMapping("/delete-task/{id}")
+    @ResponseBody
+    public void deleteTask(@PathVariable String id) {
+        boolean removed = repository.remove(id);
+        log.info("Task with id: {} was deleted.", id);
+    }
+
 }

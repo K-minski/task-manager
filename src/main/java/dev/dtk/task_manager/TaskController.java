@@ -22,4 +22,11 @@ public class TaskController {
         return "index";
     }
 
+    @PostMapping("/add-task")
+    public String addTask(@RequestParam String description, Model model) {
+        Task newTask = new Task(description);
+        repository.create(newTask);
+        model.addAttribute("task", newTask);
+        return "task-row";
+    }
 }

@@ -17,6 +17,15 @@ public class TaskRepository {
         return tasks;
     }
 
+    public Task findTaskById(String id){
+        for (Task task : tasks){
+            if( id.equals(task.getId())){
+                return task;
+            }
+        }
+        return null;
+    }
+
     public void create(Task task) {
         tasks.add(task);
     }

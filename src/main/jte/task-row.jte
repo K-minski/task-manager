@@ -1,8 +1,10 @@
-@param dev.dtk.task_manager.Task task
+@param dev.dtk.task_manager.Task.Task task
 
 <tr>
     <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-white sm:pl-0">${task.getDescription()}</td>
-    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-300">Pending</td>
+    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-300">
+        @template.button(task = task)
+    </td>
     <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
         <button hx-delete="/delete-task/${task.getId()}"
                 hx-target="closest tr"

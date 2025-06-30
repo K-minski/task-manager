@@ -1,4 +1,4 @@
-@import dev.dtk.task_manager.Task
+@import dev.dtk.task_manager.Task.Task
 @param java.util.List<Task> tasks
 
 <!DOCTYPE html>

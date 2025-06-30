@@ -1,5 +1,7 @@
 package dev.dtk.task_manager;
 
+import dev.dtk.task_manager.Task.Task;
+import dev.dtk.task_manager.Task.TaskStatus;
 import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Repository;
 
@@ -23,7 +25,15 @@ public class TaskRepository {
         return tasks.removeIf(task -> task.getId().equals(id));
     }
 
-    // Initial list of sample tasks
+    public void statusUpdate(String id) {
+        for (Task task : tasks){
+            if( id.equals(task.getId())){
+                task.setStatus(TaskStatus.COMPLETED);
+            }
+        }
+    }
+
+    // Initial list of sample temporary tasks
     @PostConstruct
     private void init() {
         tasks.addAll(List.of(

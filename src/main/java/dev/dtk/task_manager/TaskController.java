@@ -1,5 +1,6 @@
 package dev.dtk.task_manager;
 
+import dev.dtk.task_manager.Task.Task;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -33,7 +34,14 @@ public class TaskController {
     @ResponseBody
     public void deleteTask(@PathVariable String id) {
         boolean removed = repository.remove(id);
-        log.info("Task with id: {} was deleted.", id);
+        log.info("Task with id: {} was DELETED.", id);
     }
 
+    @PatchMapping("/update-task/{id}/status")
+    @ResponseBody
+    public String updateTask(@PathVariable String id) {
+        repository.statusUpdate(id);
+        log.info("Task with id: {} was UPDATED.", id);
+        return repository.findTaskById(id).getStatus().toString();
+    }
 }

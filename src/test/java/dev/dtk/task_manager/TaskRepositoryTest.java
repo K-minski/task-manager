@@ -17,13 +17,13 @@ class TaskRepositoryTest {
         TaskRepository repository = new TaskRepository();
         Task verificationTask = new Task("This task is to verify presence in repository");
         for (int i = 0; i < 4; i++) {
-            if (i == new Random().nextInt(4)){
+            if (i == 3){
                 repository.create(verificationTask);
             }else{
                 repository.create(new Task("Other tasks"));
             }
         }
-        assertTrue(repository.findAll().contains(verificationTask));
+        assertEquals(verificationTask.getDescription(),repository.findTaskById(verificationTask.getId()).getDescription());
     }
 
     @Test

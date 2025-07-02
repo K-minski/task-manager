@@ -28,6 +28,7 @@ public class TaskController {
         Task newTask = new Task(description);
         repository.create(newTask);
         model.addAttribute("task", newTask);
+        log.info("Task with id: {} was CREATED.", newTask.getId());
         return "task-row";
     }
     @DeleteMapping("/delete-task/{id}")

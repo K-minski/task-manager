@@ -2,7 +2,9 @@ name: App build workflow
 
 on:
   push:
-    branches: [ "main" ]
+    tags:
+      - '1.*' 
+      - '2.*' 
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -56,12 +58,20 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build and push
-        uses: docker/build-push-action@v4
-        with:
-          context: .
-          file: Dockerfile
-          push: true
-          tags: kminski/task-manager:latest
+      - name: Set image naming
+        id: vars
+        run: |
+          TAG=${GITHUB_REF_NAME}
+          IMAGE_DH=${{ secrets.DOCKERHUB_USERNAME }}/task-manager
+          echo "image_dh=$IMAGE_DH" >> $GITHUB_OUTPUT
+          echo "tag=$TAG" >> $GITHUB_OUTPUT
 
+      - name: Build Docker image
+        run: |
+          docker build -t ${{ steps.vars.outputs.image_dh }}:latest \
+                       -t ${{ steps.vars.outputs.image_dh }}:${{ steps.vars.outputs.tag }} \
 
+      - name: Push Docker Hub images
+        run: |
+          docker push ${{ steps.vars.outputs.image_dh }}:latest
+          docker push ${{ steps.vars.outputs.image_dh }}:${{ steps.vars.outputs.tag }}

@@ -41,7 +41,6 @@ class TaskRepositoryTest {
 
         repository.remove(verificationTask.getId());
         assertFalse(repository.findAll().contains(verificationTask));
-
     }
 
     @Test
@@ -65,7 +64,7 @@ class TaskRepositoryTest {
 
             }else{
                 // Check if there was no random changes to list.
-                assertEquals(task.getStatus(),TaskStatus.NOT_STARTED);
+                assertEquals(TaskStatus.NOT_STARTED, task.getStatus());
             }
         }
     }

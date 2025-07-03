@@ -58,7 +58,7 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Set image naming
+      - name: Set docker image naming and versioning
         id: vars
         run: |
           TAG=${GITHUB_REF_NAME}
@@ -66,12 +66,11 @@ jobs:
           echo "image_dh=$IMAGE_DH" >> $GITHUB_OUTPUT
           echo "tag=$TAG" >> $GITHUB_OUTPUT
 
-      - name: Build Docker image
-        run: |
-          docker build -t ${{ steps.vars.outputs.image_dh }}:latest \
-                       -t ${{ steps.vars.outputs.image_dh }}:${{ steps.vars.outputs.tag }} \
-
-      - name: Push Docker Hub images
-        run: |
-          docker push ${{ steps.vars.outputs.image_dh }}:latest
-          docker push ${{ steps.vars.outputs.image_dh }}:${{ steps.vars.outputs.tag }}
+      - name: Build and push Docker images
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: |
+            ${{ steps.vars.outputs.image_dh }}:latest
+            ${{ steps.vars.outputs.image_dh }}:${{ steps.vars.outputs.tag }}

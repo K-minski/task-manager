@@ -1,13 +1,14 @@
-name: App build workflow
-
+name: Docker build and push workflow on release tag
+# Triggering this workflow on pushing of tag
 on:
   push:
     tags:
-      - '1.*' 
-      - '2.*' 
+      - '1.*'
+      - '2.*'
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
+    branches: [ "main" ]
 
 jobs:
   project-verification:
@@ -39,7 +40,6 @@ jobs:
         run: mvn clean package
 
   docker-build:
-    if: ${{ github.ref == 'refs/heads/main' }}
     runs-on: ubuntu-latest
     needs:
       - project-verification
@@ -70,6 +70,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: .
+          file: Dockerfile
           push: true
           tags: |
             ${{ steps.vars.outputs.image_dh }}:latest

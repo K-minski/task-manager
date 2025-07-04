@@ -45,7 +45,7 @@ jobs:
             sudo docker stop task-manager || true
             sudo docker rm task-manager || true
             sudo docker pull kminski/task-manager:latest
-            sudo docker run -d --name task-manager -p 8080:443 kminski/task-manager:latest
+            sudo docker run -d --name task-manager -p 8080:8080 kminski/task-manager:latest
           EOF
 
       - name: Output public URL

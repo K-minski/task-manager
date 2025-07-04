@@ -31,18 +31,39 @@ public class TaskController {
         log.info("Task with id: {} was CREATED.", newTask.getId());
         return "task-row";
     }
+
     @DeleteMapping("/delete-task/{id}")
     @ResponseBody
     public void deleteTask(@PathVariable String id) {
         boolean removed = repository.remove(id);
         log.info("Task with id: {} was DELETED.", id);
     }
-
     @PatchMapping("/update-task/{id}/status")
     @ResponseBody
-    public String updateTask(@PathVariable String id) {
+    public String updateTaskStatus(@PathVariable String id) {
         repository.statusUpdate(id);
         log.info("Task with id: {} was UPDATED.", id);
         return repository.findTaskById(id).getStatus().toString();
+    }
+
+    @GetMapping("/update-task/{id}/edit")
+    public String edit(Model model, @PathVariable String id) {
+        model.addAttribute("task", repository.findTaskById(id));
+        return "task-row-edit";
+    }
+
+    @GetMapping("/update-task/{id}/edit-cancel")
+    public String cancerEdit(Model model, @PathVariable String id) {
+        model.addAttribute("task", repository.findTaskById(id));
+        return "task-row";
+    }
+
+    @PostMapping("/update-task/{id}/description")
+    public String updateTaskDescription(@PathVariable String id, @RequestParam String description, Model model) {
+        repository.descriptionUpdate(id, description);
+        Task updatedTask = repository.findTaskById(id);
+        log.info("Task with id: {} was EDITED.", id);
+        model.addAttribute("task", updatedTask);
+        return "task-row";
     }
 }

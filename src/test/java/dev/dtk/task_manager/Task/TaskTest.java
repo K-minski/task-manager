@@ -20,6 +20,14 @@ class TaskTest {
     }
 
     @Test
+    void setDescription() {
+        String testDescription = "Some sample description";
+        Task task = new Task("Initial phrase on task");
+        task.setDescription(testDescription);
+        assertEquals(testDescription, task.getDescription());
+    }
+
+    @Test
     void getStatus() {
         Task task = new Task("Some sample description");
         assertEquals(TaskStatus.NOT_STARTED,task.getStatus());

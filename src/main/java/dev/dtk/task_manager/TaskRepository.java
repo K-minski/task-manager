@@ -35,11 +35,11 @@ public class TaskRepository {
     }
 
     public void statusUpdate(String id) {
-        for (Task task : tasks){
-            if( id.equals(task.getId())){
-                task.setStatus(TaskStatus.COMPLETED);
-            }
-        }
+        findTaskById(id).setStatus(TaskStatus.COMPLETED);
+    }
+
+    public void descriptionUpdate(String id, String description){
+        findTaskById(id).setDescription(description);
     }
 
     // Initial list of sample temporary tasks

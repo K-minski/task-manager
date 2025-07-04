@@ -1,4 +1,4 @@
-name: App pull request verification
+name: CI - Pull request verification
 
 on:
   push:

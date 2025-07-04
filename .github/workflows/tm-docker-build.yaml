@@ -1,4 +1,4 @@
-name: Docker build and push workflow on release tag
+name: CD - Docker build and push
 # Triggering this workflow on pushing of tag
 on:
   push:

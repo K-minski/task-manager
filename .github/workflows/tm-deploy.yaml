@@ -1,11 +1,18 @@
-name: CD - Deploy to EC2
+name: CD-Deploy to AWS
 
 on:
-  # Allows you to run this workflow manually from the Actions tab
+  workflow_run:
+    workflows:
+      - [ "CD - Docker build and push" ]
+    types:
+      - completed
+
+  workflows:
   workflow_dispatch:
 
 jobs:
   deploy:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
 
     steps:
@@ -43,3 +50,8 @@ jobs:
             sudo docker pull kminski/task-manager:latest
             sudo docker run -d --name task-manager -p 8080:443 kminski/task-manager:latest
           EOF
+
+      - name: Output public URL
+        run: |
+          echo "Application is deployed and accessible at:"
+          echo "http://ec2-13-61-155-244.eu-north-1.compute.amazonaws.com:8080/"

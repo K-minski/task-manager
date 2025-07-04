@@ -13,8 +13,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it 
-      #( by default ReadyAPI Composite project file will be in $GITHUB_WORKSPACE location until changed in actions/checkout@v4 options)
       - name: Checkout Source Code
         uses: actions/checkout@v4
 

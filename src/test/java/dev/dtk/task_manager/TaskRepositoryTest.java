@@ -17,13 +17,13 @@ class TaskRepositoryTest {
         TaskRepository repository = new TaskRepository();
         Task verificationTask = new Task("This task is to verify presence in repository");
         for (int i = 0; i < 4; i++) {
-            if (i == 3){
+            if (i == 3) {
                 repository.create(verificationTask);
-            }else{
+            } else {
                 repository.create(new Task("Other tasks"));
             }
         }
-        assertEquals(verificationTask.getDescription(),repository.findTaskById(verificationTask.getId()).getDescription());
+        assertEquals(verificationTask.getDescription(), repository.findTaskById(verificationTask.getId()).getDescription());
     }
 
     @Test
@@ -62,9 +62,32 @@ class TaskRepositoryTest {
                 // Check if one of pointed tasks changed status
                 assertEquals(randomId, task.getId());
 
-            }else{
+            } else {
                 // Check if there was no random changes to list.
                 assertEquals(TaskStatus.NOT_STARTED, task.getStatus());
+            }
+        }
+    }
+
+    @Test
+    void descriptionUpdate() {
+
+        String testDescriptionPhrase = "This is phrase for test purposes";
+        TaskRepository repository = new TaskRepository();
+        repository.findAll().addAll(List.of(
+                new Task("Lista 1 - Zadanie 1: Utworzenie projektu w wybranej technologii"),
+                new Task("Lista 1 - Zadanie 2: Rozbudowa README"),
+                new Task("Lista 2 - Zadanie 1: Workflow z gałęziami"),
+                new Task("Lista 3 - Zadanie główne: Kompleksowe wdrożenie projektu"),
+                new Task("Lista 3 - Zadanie dodatkowe 1: Multi-environment deployment")
+        ));
+        String randomId = repository.findAll().get(new Random().nextInt(repository.findAll().size())).getId();
+
+        repository.descriptionUpdate(randomId, testDescriptionPhrase);
+        for (Task task : repository.findAll()) {
+            if (task.getDescription().equals(testDescriptionPhrase)) {
+                // Check if one of pointed tasks changed status and compare ID
+                assertEquals(randomId, task.getId());
             }
         }
     }
